@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>意图分类对比工作台</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="app">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1><span class="header-icon">⚡</span> 意图分类对比工作台</h1>
+                <span class="header-sub">多模型联合测试</span>
+            </div>
+            <div class="header-right">
+                <div class="api-status">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    <span id="apiStatus">检测中...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content: 左右两栏 -->
+        <div class="main-layout">
+            <!-- 左栏：输入 + 控制 -->
+            <div class="left-panel">
+                <div class="input-card">
+                    <div class="input-label">输入文本</div>
+                    <div class="text-input-container">
+                        <textarea id="inputText" placeholder="输入文本，例如：帮我播放周杰伦的歌曲" rows="5"></textarea>
+                        <div class="input-meta">
+                            <span class="char-count"><span id="charCount">0</span> 字符</span>
+                            <span id="textWarning" class="text-warning-hidden"></span>
+                        </div>
+                    </div>
+                    <div class="examples">
+                        <span class="example-label">示例</span>
+                        <button class="example-btn" data-text="帮我播放周杰伦的歌曲">🎵 播放音乐</button>
+                        <button class="example-btn" data-text="今天北京天气怎么样">🌤 查询天气</button>
+                        <button class="example-btn" data-text="打开客厅的灯">💡 设备控制</button>
+                    </div>
+                </div>
+
+                <div class="controls-card">
+                    <div class="controls-label">选择模型</div>
+                    <div class="model-selector">
+                        <label class="model-chip" data-model="regex">
+                            <input type="radio" name="model" id="regex" value="regex" checked>
+                            <span class="chip-dot" style="background:#00d4ff;"></span>
+                            <span class="chip-text">正则</span>
+                        </label>
+                        <label class="model-chip" data-model="tfidf">
+                            <input type="radio" name="model" id="tfidf" value="tfidf">
+                            <span class="chip-dot" style="background:#10b981;"></span>
+                            <span class="chip-text">TF-IDF</span>
+                        </label>
+                        <label class="model-chip" data-model="bert">
+                            <input type="radio" name="model" id="bert" value="bert">
+                            <span class="chip-dot" style="background:#8b5cf6;"></span>
+                            <span class="chip-text">BERT</span>
+                        </label>
+                        <label class="model-chip" data-model="gpt">
+                            <input type="radio" name="model" id="gpt" value="gpt">
+                            <span class="chip-dot" style="background:#f59e0b;"></span>
+                            <span class="chip-text">LLM</span>
+                        </label>
+                    </div>
+
+                    <div class="action-row">
+                        <button id="classifyBtn" class="btn-primary" disabled>
+                            <i class="fas fa-play"></i> 开始分类
+                        </button>
+                        <button id="compareBtn" class="btn-compare" disabled>
+                            <i class="fas fa-flask"></i> 全部对比
+                        </button>
+                        <button id="clearBtn" class="btn-secondary">
+                            <i class="fas fa-rotate-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右栏：结果卡片 2×2 -->
+            <div class="right-panel">
+                <div class="results-grid" id="resultsGrid">
+                    <!-- 卡片容器：JS 填充 -->
+                </div>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>模型正在分析中...</p>
+                </div>
+                <div class="benchmark-section" id="benchmarkSection" style="display:none;">
+                    <h2><i class="fas fa-chart-simple"></i> 模型性能对比</h2>
+                    <div class="benchmark-table-wrapper">
+                        <table class="benchmark-table" id="benchmarkTable">
+                            <thead>
+                                <tr>
+                                    <th>模型</th>
+                                    <th>响应时间</th>
+                                    <th>预估精度</th>
+                                    <th>开销</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarkBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            <span>意图分类服务 v0.8</span>
+            <span class="footer-sep">·</span>
+            <span>FastAPI + 多模型架构</span>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

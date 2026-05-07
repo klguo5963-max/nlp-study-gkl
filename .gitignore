@@ -1,0 +1,32 @@
+# 环境配置
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# 模型权重（大文件不推）
+assets/weights/bert.pt
+assets/weights/bert_best/
+assets/weights/tfidf_ml.pkl
+
+# 训练缓存/checkpoints
+assets/weights/bert/checkpoints/
+
+# HuggingFace 缓存（几百 MB）
+assets/models/
+
+# IDE
+.idea/
+*.err
+*.err.txt
+
+# 训练产物
+training_code/__pycache__/
+*.log
+server_debug.log
+test/__pycache__/
